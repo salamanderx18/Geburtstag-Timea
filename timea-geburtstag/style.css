@@ -1,0 +1,265 @@
+:root{
+    --bg: #ffe6ee;
+    --bg2: #ffd2e2;
+    --card: #fff9fb;
+    --ink: #4a1942;
+    --ink-soft: #7a4a68;
+    --rose: #e8547c;
+    --rose-deep: #c23a63;
+    --gold: #f0b64f;
+    --line: rgba(74,25,66,0.12);
+    --shadow: 0 18px 40px rgba(194,58,99,0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #2a1220;
+      --bg2: #3a1a2c;
+      --card: #3c1c2e;
+      --ink: #ffe9f2;
+      --ink-soft: #e3b9cf;
+      --rose: #ff7fa3;
+      --rose-deep: #ff9cb8;
+      --gold: #f5c976;
+      --line: rgba(255,233,242,0.14);
+      --shadow: 0 18px 40px rgba(0,0,0,0.45);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #2a1220;
+    --bg2: #3a1a2c;
+    --card: #3c1c2e;
+    --ink: #ffe9f2;
+    --ink-soft: #e3b9cf;
+    --rose: #ff7fa3;
+    --rose-deep: #ff9cb8;
+    --gold: #f5c976;
+    --line: rgba(255,233,242,0.14);
+    --shadow: 0 18px 40px rgba(0,0,0,0.45);
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+  html,body{margin:0; padding:0;}
+  body{
+    background: linear-gradient(160deg, var(--bg), var(--bg2));
+    color: var(--ink);
+    font-family: 'Nunito Sans', system-ui, sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+  .display{ font-family: 'Fraunces', Georgia, serif; }
+  .script{ font-family: 'Caveat', cursive; }
+
+  /* floating hearts */
+  .hearts{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:0;}
+  .hearts span{
+    position:absolute; bottom:-10%;
+    font-size: 22px;
+    opacity: 0.35;
+    animation: floatUp linear infinite;
+    color: var(--rose);
+  }
+  @keyframes floatUp{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0;}
+    10%{opacity:.4;}
+    90%{opacity:.3;}
+    100%{ transform: translateY(-115vh) translateX(var(--drift,20px)) rotate(25deg); opacity:0;}
+  }
+
+  .screen{
+    position:relative;
+    min-height:100vh;
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: 32px 20px 56px;
+    z-index:1;
+    text-align:center;
+  }
+  .screen.active{ display:flex; animation: fadeIn .7s ease; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+
+  /* ---- Cover ---- */
+  #cover .badge{
+    font-size: 13px;
+    letter-spacing:.03em;
+    color: var(--rose-deep);
+    background: rgba(232,84,124,0.1);
+    border: 1px solid var(--line);
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 22px;
+  }
+  #cover h1{
+    font-size: clamp(2.4rem, 11vw, 4.2rem);
+    line-height: 1;
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+  #cover .name{
+    font-family:'Caveat', cursive;
+    font-size: clamp(3rem, 15vw, 5.5rem);
+    color: var(--rose-deep);
+    margin: 0 0 18px;
+    line-height:.9;
+  }
+  #cover p.sub{
+    max-width: 340px;
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    margin: 0 0 40px;
+  }
+
+  .cake-wrap{ position:relative; cursor:pointer; user-select:none; }
+  .cake{ font-size: 92px; filter: drop-shadow(0 12px 18px rgba(194,58,99,0.28)); transition: transform .25s ease; }
+  .cake-wrap:active .cake{ transform: scale(0.92); }
+  .flame{ display:inline-block; animation: flicker 1.6s ease-in-out infinite; }
+  @keyframes flicker{ 0%,100%{ transform: scale(1) rotate(-2deg);} 50%{ transform: scale(1.15) rotate(2deg);} }
+
+  .tap-hint{
+    margin-top: 18px;
+    font-size: .95rem;
+    color: var(--ink-soft);
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+  }
+  .tap-hint .arrow{ animation: bob 1.4s ease-in-out infinite; font-size:1.2rem; color: var(--rose);}
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
+
+  .countdown-chip{
+    position:fixed; top:16px; left:50%; transform:translateX(-50%);
+    background: var(--card); border:1px solid var(--line); box-shadow: var(--shadow);
+    padding: 8px 18px; border-radius: 999px; font-size:.85rem; color: var(--rose-deep);
+    z-index: 5; font-weight:700;
+  }
+
+  /* ---- Flowers transition ---- */
+  #flowers{ background: radial-gradient(circle at 50% 20%, rgba(255,255,255,.5), transparent 60%); }
+  .bouquet-svg{ width: 200px; height:auto; margin-bottom: 14px; }
+  #flowers h2{ font-family:'Caveat',cursive; font-size: clamp(2.2rem,9vw,3.2rem); color: var(--rose-deep); margin: 8px 0 0;}
+  #flowers p{ color: var(--ink-soft); max-width:320px; margin-top:10px;}
+
+  /* ---- Card screen (flowers + song) ---- */
+  .stack{ width:100%; max-width: 900px; display:flex; flex-direction:column; gap:18px; }
+  @media (min-width:720px){ .stack.row{ flex-direction:row; } .stack.row > *{flex:1;} }
+
+  .panel{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    padding: 26px 22px;
+    box-shadow: var(--shadow);
+  }
+  .panel h3{ font-family:'Fraunces',serif; font-weight:600; font-size:1.25rem; margin:0 0 14px; color: var(--rose-deep);}
+
+  .player{
+    background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+    border-radius: 18px;
+    padding: 18px;
+    color: #fff;
+    text-align:left;
+  }
+  .player .track{ font-weight:700; font-size:1.05rem; }
+  .player .artist{ opacity:.85; font-size:.85rem; margin-bottom:14px;}
+  .player .bar{ height:5px; background: rgba(255,255,255,.35); border-radius:99px; overflow:hidden; margin: 10px 0 14px;}
+  .player .bar i{ display:block; height:100%; width:38%; background:#fff; border-radius:99px; }
+  .player .row{ display:flex; align-items:center; justify-content:space-between; }
+  .playbtn{
+    width:46px; height:46px; border-radius:50%; background:#fff; color: var(--rose-deep);
+    border:none; font-size:1.1rem; display:flex; align-items:center; justify-content:center; cursor:pointer;
+  }
+  .yt-link{
+    color:#fff; font-size:.8rem; text-decoration:none; border-bottom:1px solid rgba(255,255,255,.5);
+  }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background: var(--rose-deep); color:#fff; border:none;
+    padding: 13px 28px; border-radius: 999px; font-size: 1rem; font-weight:700;
+    cursor:pointer; margin-top: 26px; box-shadow: 0 10px 24px rgba(194,58,99,0.35);
+  }
+  .btn.ghost{ background:transparent; color: var(--rose-deep); border:1.5px solid var(--rose-deep); box-shadow:none; }
+
+  /* ---- Gifts screen ---- */
+  #gifts h2{ font-family:'Fraunces',serif; font-size: clamp(1.7rem,7vw,2.3rem); margin: 0 0 4px; }
+  #gifts .sub{ color: var(--ink-soft); margin: 0 0 30px; font-size:.95rem; }
+  .gift-grid{ display:flex; gap:16px; flex-wrap:wrap; justify-content:center; max-width:520px; }
+  .gift{
+    width: 148px; height:148px;
+    background: var(--card); border:1px solid var(--line); border-radius: 22px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px;
+    cursor:pointer; box-shadow: var(--shadow); transition: transform .2s ease;
+  }
+  .gift:active{ transform: scale(0.95); }
+  .gift .ic{ font-size: 40px; }
+  .gift .lbl{ font-size:.82rem; color: var(--ink-soft); font-weight:700; }
+
+  /* ---- Overlay ---- */
+  .overlay{
+    position:fixed; inset:0; background: rgba(42,18,32,0.55); backdrop-filter: blur(3px);
+    display:none; align-items:flex-end; justify-content:center; z-index: 50;
+  }
+  .overlay.active{ display:flex; animation: fadeIn .3s ease; }
+  .sheet{
+    background: var(--bg); width:100%; max-width: 640px; max-height: 86vh; overflow-y:auto;
+    border-radius: 28px 28px 0 0; padding: 26px 22px 34px; position:relative;
+    animation: slideUp .35s cubic-bezier(.2,.8,.3,1);
+  }
+  @keyframes slideUp{ from{ transform: translateY(40px); opacity:0;} to{ transform: translateY(0); opacity:1;} }
+  .sheet .close{
+    position:sticky; top:0; float:right; background: var(--card); border:1px solid var(--line);
+    width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; font-size:1rem; color: var(--ink-soft); margin-bottom:8px;
+  }
+  .sheet h3{ font-family:'Fraunces',serif; color: var(--rose-deep); font-size:1.4rem; clear:both; margin-top:0;}
+
+  /* flower sheet */
+  .bouquet-big{ width:180px; margin: 6px auto 16px; display:block;}
+
+  /* photo gallery */
+  .photo-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-top:8px;}
+  .photo-card{ background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; text-align:left;}
+  .photo-card img{ width:100%; display:block; aspect-ratio: 3/4; object-fit:cover;}
+  .photo-card p{ font-size:.72rem; color: var(--ink-soft); margin:0; padding:8px 10px 10px; line-height:1.3;}
+
+  /* letter */
+  .envelope-wrap{ display:flex; flex-direction:column; align-items:center; padding: 10px 0 4px;}
+  .envelope{ font-size:70px; margin-bottom:6px;}
+  .letter-body{
+    text-align:left; font-family:'Fraunces', serif; font-size: 1.02rem; line-height:1.75;
+    color: var(--ink); white-space: pre-line; padding-top:8px;
+  }
+  .letter-body::first-letter{ font-size:2.2rem; font-family:'Caveat',cursive; color: var(--rose-deep);}
+
+  footer.made{
+    position:relative; z-index:1; text-align:center; color: var(--ink-soft); font-size:.72rem;
+    padding: 30px 20px 10px;
+  }
+
+  /* ---- Flower cover transition (plays before a gift opens) ---- */
+  .flower-cover{
+    position:fixed; inset:0; z-index:70;
+    display:grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(16, 1fr);
+    background: linear-gradient(160deg, var(--bg2), var(--rose));
+    opacity:0; pointer-events:none;
+    transition: opacity .25s ease;
+  }
+  .flower-cover.active{ opacity:1; pointer-events:all; }
+  .flower-cover .fl{
+    display:flex; align-items:center; justify-content:center;
+    font-size: clamp(20px, 5vw, 38px);
+    transform: scale(0) rotate(-20deg);
+    opacity:0;
+  }
+  .flower-cover.bloom .fl{ animation: flPop .5s cubic-bezier(.22,.9,.35,1.1) forwards; }
+  .flower-cover.wilt .fl{ animation: flWilt .45s cubic-bezier(.5,0,1,1) forwards; }
+  @keyframes flPop{
+    from{ transform: scale(0) rotate(-20deg); opacity:0; }
+    70%{ transform: scale(1.15) rotate(4deg); opacity:1; }
+    to{ transform: scale(1) rotate(0deg); opacity:1; }
+  }
+  @keyframes flWilt{
+    from{ transform: scale(1) rotate(0deg); opacity:1; }
+    to{ transform: scale(0) rotate(18deg); opacity:0; }
+  }
